@@ -5,7 +5,8 @@ const gameModule = {
     guesser: '',
     inProgress: false,
     result: '',
-    word: ''
+    word: '',
+    errorMessage: ''
   },
   mutations: {
     setGuesser (state, payload) {
@@ -19,6 +20,9 @@ const gameModule = {
     },
     setNewWord (state, payload) {
       state.word = payload
+    },
+    setErrorMessage (state, payload) {
+      state.errorMessage = payload
     }
   },
   getters: {
@@ -33,6 +37,9 @@ const gameModule = {
     },
     word (state) {
       return state.word
+    },
+    errorMessage (state) {
+      return state.errorMessage
     }
   },
   actions: {
@@ -52,7 +59,16 @@ const gameModule = {
       commit('setNewWord', word)
     },
     async setNewWordForComputer ({ commit }, payload) {
-      //
+      const isNounAndValid = await WordService.isNounAndValid(payload)
+
+      if (isNounAndValid) {
+        commit('setNewWord', payload)
+        commit('setErrorMessage', '')
+
+        return true
+      } else {
+        commit('setErrorMessage', 'Words must be nouns and spelled correctly.')
+      }
     }
   }
 }

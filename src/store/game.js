@@ -1,8 +1,11 @@
+import { WordService } from '@/services/WordService'
+
 const gameModule = {
   state: {
     guesser: '',
     inProgress: false,
-    result: ''
+    result: '',
+    word: ''
   },
   mutations: {
     setGuesser (state, payload) {
@@ -13,6 +16,9 @@ const gameModule = {
     },
     setResult (state, payload) {
       state.result = payload
+    },
+    setNewWord (state, payload) {
+      state.word = payload
     }
   },
   getters: {
@@ -24,6 +30,9 @@ const gameModule = {
     },
     result (state) {
       return state.result
+    },
+    word (state) {
+      return state.word
     }
   },
   actions: {
@@ -37,6 +46,13 @@ const gameModule = {
     },
     async setResult ({ commit }, payload) {
       commit('setResult', payload)
+    },
+    async setNewWordForPlayer ({ commit }) {
+      const word = await WordService.generateNewValidWord()
+      commit('setNewWord', word)
+    },
+    async setNewWordForComputer ({ commit }, payload) {
+      //
     }
   }
 }

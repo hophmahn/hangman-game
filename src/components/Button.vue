@@ -1,5 +1,5 @@
 <template>
-  <button :class="classObject" @click="onClick">
+  <button :class="classObject" @click="onClick" :disabled="disabled">
     <slot></slot>
   </button>
 </template>
@@ -11,6 +11,10 @@ export default {
     onClick: {
       type: Function,
       required: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -56,6 +60,10 @@ button:focus {
 
 button:active {
     transform: scale(0.99);
+}
+
+button:disabled {
+  background: grey;
 }
 
 @media screen and (max-width: 480px) {

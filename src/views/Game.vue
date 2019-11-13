@@ -46,11 +46,16 @@ export default {
   ],
   methods: {
     ...mapActions(['stopGame', 'setResult', 'setNewWordForPlayer', 'setNewWordForComputer']),
-    onClick () {
-      this.finishGame('win')
+    defineResult (result) {
+      if (this.guesser === 'Player') {
+        return result === 'win' ? 'win' : 'lose'
+      } else if (this.guesser === 'Computer') {
+        return result === 'win' ? 'lose' : 'win'
+      }
     },
     finishGame (result) {
-      this.setResult(result)
+      const definedResult = this.defineResult(result)
+      this.setResult(definedResult)
       this.stopGame()
       this.$router.history.push('/result')
     },

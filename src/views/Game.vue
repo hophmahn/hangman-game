@@ -16,6 +16,8 @@ import { mapGetters, mapActions } from 'vuex'
 import HangmanContainer from '@/components/HangmanContainer'
 import DashedWord from '@/components/DashedWord'
 import Guess from '@/components/Guess'
+import PlayerGameMixin from '@/mixins/PlayerGameMixin'
+import ComputerGameMixin from '@/mixins/ComputerGameMixin'
 
 export default {
   components: {
@@ -34,10 +36,16 @@ export default {
     ...mapGetters(['guesser', 'inProgress', 'word'])
   },
   created () {
-    this.setNewWordForPlayer()
+    if (this.guesser === 'Player') {
+      this.setNewWordForPlayer()
+    }
   },
+  mixins: [
+    PlayerGameMixin,
+    ComputerGameMixin
+  ],
   methods: {
-    ...mapActions(['stopGame', 'setResult', 'setNewWordForPlayer']),
+    ...mapActions(['stopGame', 'setResult', 'setNewWordForPlayer', 'setNewWordForComputer']),
     onClick () {
       this.finishGame('win')
     },
@@ -57,17 +65,6 @@ export default {
       ++this.misses
 
       if (this.misses === 6) {
-        this.finishGame('lose')
-      }
-    },
-    handleUpdate (letter) {
-      if (this.misses < 6) {
-        if (this.word.split('').includes(letter)) {
-          this.handleFoundLetter(letter)
-        } else {
-          this.handleMissedLetter(letter)
-        }
-      } else {
         this.finishGame('lose')
       }
     }

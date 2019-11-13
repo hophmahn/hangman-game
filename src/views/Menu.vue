@@ -24,7 +24,12 @@ export default {
     onButtonPress (event) {
       const guesser = event.target.innerHTML
       this.startGame(guesser)
-      this.$router.history.push('/game')
+
+      if (guesser === 'Player') {
+        this.$router.history.push('/game')
+      } else {
+        this.$router.history.push('/prepare-word')
+      }
     }
   }
 }

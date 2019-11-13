@@ -8,17 +8,20 @@
 <script>
 import DefaultLayout from '@/layouts/Default'
 import Button from '@/components/Button'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
     DefaultLayout,
     Button
   },
-  props: {
-    result: String
+  computed: {
+    ...mapGetters(['result'])
   },
   methods: {
+    ...mapActions(['setResult']),
     onButtonPress (event) {
+      this.setResult('')
       this.$router.history.push('/')
     }
   }

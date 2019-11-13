@@ -16,10 +16,11 @@ export default {
     ...mapGetters(['guesser', 'inProgress'])
   },
   methods: {
-    ...mapActions(['stopGame']),
+    ...mapActions(['stopGame', 'setResult']),
     onClick () {
+      this.setResult('win')
       this.stopGame()
-      this.$router.history.push('/')
+      this.$router.history.push('/result')
     }
   }
 }

@@ -1,7 +1,8 @@
 const gameModule = {
   state: {
     guesser: '',
-    inProgress: false
+    inProgress: false,
+    result: ''
   },
   mutations: {
     setGuesser (state, payload) {
@@ -9,6 +10,9 @@ const gameModule = {
     },
     setInProgress (state, payload) {
       state.inProgress = payload
+    },
+    setResult (state, payload) {
+      state.result = payload
     }
   },
   getters: {
@@ -17,6 +21,9 @@ const gameModule = {
     },
     inProgress (state) {
       return state.inProgress
+    },
+    result (state) {
+      return state.result
     }
   },
   actions: {
@@ -27,6 +34,9 @@ const gameModule = {
     async stopGame ({ commit }) {
       commit('setGuesser', '')
       commit('setInProgress', false)
+    },
+    async setResult ({ commit }, payload) {
+      commit('setResult', payload)
     }
   }
 }
